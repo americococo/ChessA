@@ -21,4 +21,12 @@ public:
 	void print();
 
 	bool isMoving(sPosition postion);
+
+
+	//자기 식별용 
+protected:
+	char _piescesCode;
+public:
+	char getPiecesCode() { return _piescesCode; }
+
 };

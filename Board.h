@@ -19,5 +19,13 @@ public:
 
 	int settingBoard(Pieces * pic,sPosition pos);
 
+
+
+
+	//∏ª ¿Ãµø
+	void piecesMove(sPosition chPos, sPosition relMove);
+
+
+	void printBoard();
 };
 

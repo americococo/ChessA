@@ -26,6 +26,6 @@ void Bishop::setup()
 		ps.y = -1;
 		relative_move.push_back(ps);
 	}
-
+	_piescesCode = 'B';
 	return;
 }

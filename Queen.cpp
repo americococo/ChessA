@@ -51,6 +51,6 @@ void Queen::setup()
 		relative_move.push_back(ps);
 	}
 
-
+	_piescesCode = 'Q';
 	return;
 }

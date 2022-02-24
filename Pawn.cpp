@@ -26,6 +26,8 @@ void Pawn::setup()
 		ps.y = 1;
 		relative_move.push_back(ps);
 	}
+
+	_piescesCode = 'P';
 	return;
 }
 

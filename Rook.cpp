@@ -27,5 +27,6 @@ void Rook::setup()
 		relative_move.push_back(ps);
 	}
 
+	_piescesCode = 'R';
 	return;
 }

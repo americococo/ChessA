@@ -50,5 +50,7 @@ void Knight::setup()
 		ps.y = -2;
 		relative_move.push_back(ps);
 	}
+	_piescesCode = 'K';
+
 	return;
 }
