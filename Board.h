@@ -27,5 +27,12 @@ public:
 
 
 	void printBoard();
+
+
+	//앙파상을 위해 폰이 끝까지 다가왔는데 체크
+
+public:
+	bool canPromotion(sPosition piePos);
+
 };
 

@@ -3,7 +3,7 @@
 class Knight :public Pieces
 {
 public:
-	Knight() { setup(); }
+	Knight(bool color) { _color=color; setup(); }
 	~Knight(){}
 
 	void setup();

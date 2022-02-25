@@ -3,7 +3,7 @@
 class Rook :public Pieces
 {
 public:
-	Rook() { setup(); }
+	Rook(bool color) { _color = color; setup(); }
 	~Rook(){}
 
 	void  setup();

@@ -3,7 +3,7 @@
 class Bishop :public Pieces
 {
 public:
-	Bishop() { setup(); }
+	Bishop(bool color) { _color = color; setup(); }
 	~Bishop(){}
 
 	void setup();

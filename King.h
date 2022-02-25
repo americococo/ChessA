@@ -4,7 +4,7 @@
 class King :public Pieces
 {
 public:
-	King() { _oneMove = false; setup(); }
+	King(bool color) { _color = color; _oneMove = false; setup(); }
 	~King() {}
 
 	void setup();

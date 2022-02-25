@@ -3,10 +3,17 @@
 class Pawn : public Pieces
 {
 public:
-	Pawn() { setup(); }
+	Pawn(bool color) { _color = color; _oneMove = false; setup(); }
 	~Pawn() {}
 
 	void setup();
-	//sPosition promotion();
+	
+
+	Pieces * Promotion();
+
+private:
+	bool _oneMove;
+public:
+	void moveAction();
 };
 

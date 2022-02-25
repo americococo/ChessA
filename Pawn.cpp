@@ -1,5 +1,8 @@
 #include "Pawn.h"
 
+#include "piecesH.h"
+#include <stdio.h>
+
 void Pawn::setup()
 {
 	{
@@ -31,14 +34,33 @@ void Pawn::setup()
 	return;
 }
 
-//sPosition Pawn::promotion()
-//{
-//	//대충 자기 위치에다가 
-//	//비숍,나이트,룩,퀸 선택한것을 생성후
-//	//자기자신 삭제
-//	//delete this;
-//
-//	//sPosition ps;
-//
-//	//return ps;
-//}
+Pieces * Pawn::Promotion()
+{
+	char change_piecesShape;
+
+	printf("프로모션 찬스!!!!\n");
+	printf("B. bishop \t R. rook \t K. khight Q. queen \n");
+	scanf_s("%c", &change_piecesShape,1);
+
+	Pieces * pic;
+
+	switch (change_piecesShape)
+	{
+	case 'B':
+		pic = new Bishop(_color);
+		break;
+	case 'R':
+		pic = new Rook(_color);
+		break;
+	case 'K':
+		pic = new Knight(_color);
+		break;
+	case 'Q':
+	default:
+		pic = new Queen(_color);
+		break;
+	}
+
+	return pic;
+}
+

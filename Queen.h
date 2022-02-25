@@ -3,7 +3,7 @@
 class Queen : public Pieces
 {
 public:
-	Queen() { setup(); }
+	Queen(bool color) { _color = color; setup(); }
 	~Queen(){}
 
 

@@ -58,3 +58,12 @@ void Board::printBoard()
 	}
 	printf("|=====||=====||=====||=====||=====||=====||=====||=====|\n");
 }
+
+bool Board::canPromotion(sPosition piePos)
+{
+	if (nullptr == _mapData[piePos.y][piePos.x])
+		if (piePos.y == 0 || piePos.y == 7)
+			return true;
+		
+	return false;
+}
