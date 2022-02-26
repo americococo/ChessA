@@ -14,6 +14,10 @@ public:
 private:
 	bool _oneMove;
 public:
+	bool isMoving(sPosition postion);
+
+
+private:
 	void moveAction();
 };
 

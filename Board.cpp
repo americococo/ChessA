@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "Pieces.h"
+#include "piecesH.h"
 #include <stdio.h>
 Board::Board()
 {
@@ -28,15 +29,28 @@ int Board::settingBoard(Pieces* pic, sPosition pos)
 	return 0;
 }
 
-void Board::piecesMove(sPosition chPos, sPosition relMove)
+bool Board::piecesMove(sPosition chPos, sPosition relMove)
 {
-	if (true == _mapData[chPos.y][chPos.x]->isMoving(relMove))
+	sPosition realtionMove;
+	realtionMove.y = relMove.y - chPos.y;
+	realtionMove.x = relMove.x - chPos.x;
+
+	if (true == _mapData[chPos.y][chPos.x]->isMoving(realtionMove))
 	{
-		_mapData[chPos.y + relMove.y][chPos.x + relMove.x] =
+		_mapData[relMove.y][relMove.x] =
 			_mapData[chPos.y][chPos.x];
 
+		Pieces* pic;
+		if (canPromotion(relMove))
+		{
+			pic = ((Pawn*)_mapData[relMove.y][relMove.x])->Promotion();
+			delete _mapData[relMove.y][relMove.x];
+			_mapData[relMove.y][relMove.x] = pic;
+		}
 		_mapData[chPos.y][chPos.x] = nullptr;
+		return true;
 	}
+	return false;
 }
 
 void Board::printBoard()
@@ -61,9 +75,29 @@ void Board::printBoard()
 
 bool Board::canPromotion(sPosition piePos)
 {
-	if (nullptr == _mapData[piePos.y][piePos.x])
+	char pawncode = 'p';
+	if (nullptr != _mapData[piePos.y][piePos.x])
+		if(pawncode = _mapData[piePos.y][piePos.x]->getPiecesCode())
 		if (piePos.y == 0 || piePos.y == 7)
 			return true;
 		
 	return false;
+}
+
+Pieces* Board::searchPieces(char  picName,bool picColor) 
+{
+	Pieces* pic=nullptr;
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if (nullptr != _mapData[i][j])
+				if (picName == _mapData[i][j]->getPiecesCode()
+					&&picColor == _mapData[i][j]->getColor())
+				{
+					pic = _mapData[i][j];
+				}
+		}
+	}
+	return pic;
 }

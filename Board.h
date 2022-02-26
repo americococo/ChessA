@@ -23,7 +23,7 @@ public:
 
 
 	//∏ª ¿Ãµø
-	void piecesMove(sPosition chPos, sPosition relMove);
+	bool piecesMove(sPosition chPos, sPosition relMove);
 
 
 	void printBoard();
@@ -33,6 +33,9 @@ public:
 
 public:
 	bool canPromotion(sPosition piePos);
+
+
+	Pieces* searchPieces(char picName, bool picColor);
 
 };
 

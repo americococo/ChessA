@@ -26,7 +26,7 @@ public:
 	//테스트용 코드
 	void print();
 
-	bool isMoving(sPosition postion);
+	virtual bool isMoving(sPosition postion);
 
 
 	//자기 식별용 

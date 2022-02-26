@@ -50,7 +50,7 @@ void King::setup()
 		ps.y = -1;
 		relative_move.push_back(ps);
 	}
-	_piescesCode = 'S';
+	_piescesCode = 'K';
 	return;
 }
 
@@ -60,3 +60,18 @@ void King::moveAction()
 	return;
 }
 
+bool King::isMoving(sPosition postion)
+{
+	std::vector<sPosition>::iterator itr = relative_move.begin();
+
+	for (; itr != relative_move.end(); itr++)
+	{
+		if (true == isEqualPosition((*itr), postion))
+		{
+			moveAction();
+			return true;
+		}
+	}
+
+	return false;
+}

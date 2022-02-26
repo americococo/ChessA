@@ -13,8 +13,14 @@ public:
 //캐슬링 위해 아무것도 움직였는지 체크
 private:
 	bool _oneMove;
+	void moveAction();
+
+
 
 public:
-	void moveAction();
+	bool isMoving(sPosition postion);
+
+
+
 };
 
