@@ -37,5 +37,12 @@ public:
 
 	Pieces* searchPieces(char picName, bool picColor);
 
+
+	//기보데이터
+private:
+	char getLastgiboData[3][4];
+public:
+	void insertLastgiboData(char giboData[]);
+
 };
 

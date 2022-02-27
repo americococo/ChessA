@@ -30,6 +30,16 @@ void Pawn::setup()
 		relative_move.push_back(ps);
 	}
 
+	if (_color != true)
+	{
+		std::vector<sPosition>::iterator itr = relative_move.begin();
+
+		for (; itr != relative_move.end(); itr++)
+		{
+			(*itr).y = (*itr).y * -1;
+		}
+	}
+
 	_piescesCode = 'P';
 	return;
 }

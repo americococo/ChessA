@@ -9,7 +9,7 @@ class Pieces
 public:
 	Pieces() { setup(); }
 	Pieces(bool color) { _color = color; setup(); }
-	~Pieces() {}
+	~Pieces() { relative_move.clear(); }
 
 
 
