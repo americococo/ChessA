@@ -32,9 +32,21 @@ public:
 	//자기 식별용 
 protected:
 	char _piescesCode;
-public:
-	char getPiecesCode() {if (_color)return _piescesCode;else return tolower(_piescesCode);}
+	sPosition _curPosition;
 
+
+
+public:
+	void settingPosition(sPosition pos);
+
+	sPosition getPos() { return _curPosition; }
+
+public:
+	char getPiecesCode() { return _piescesCode; }
+
+	char PiecesPrintCode(){ if (_color)return _piescesCode; else return tolower(_piescesCode); }
 	
-	
+
+public:
+	virtual void moveAction() {}
 };

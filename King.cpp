@@ -60,18 +60,15 @@ void King::moveAction()
 	return;
 }
 
-bool King::isMoving(sPosition postion)
+bool King::amIDanger()
 {
-	std::vector<sPosition>::iterator itr = relative_move.begin();
+	//적군 진로 확인
+	//적군 데이터 관리
+	//적군 데이터 통해서 적군 다음턴 경로 검사
+	//경로내에 왕이 존재할경우 true 반환
+	//없으면 false 반환
 
-	for (; itr != relative_move.end(); itr++)
-	{
-		if (true == isEqualPosition((*itr), postion))
-		{
-			moveAction();
-			return true;
-		}
-	}
 
-	return false;
+
+	return true;
 }

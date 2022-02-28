@@ -62,7 +62,9 @@ int main()
 		{
 			sPosition pos;
 			pos.y = 1 + (j * 5), pos.x = i;
-			board->settingBoard(new Pawn(picColor), pos);
+			Pieces * pic = new Pawn(picColor);
+			board->settingBoard(pic, pos);
+			board->insertColorPieces(pic, picColor);
 		}
 		picColor = false;
 	}
@@ -76,30 +78,49 @@ int main()
 		{
 			sPosition pos;
 			pos.y = (i * 7), pos.x = j * 7;
-			board->settingBoard(new Rook(picColor), pos);
+			Pieces* pic = new Rook(picColor);
+
+			board->settingBoard(pic, pos);
+			board->insertColorPieces(pic, picColor);
 
 			pos.x = j * 5 + 1;
-			board->settingBoard(new Knight(picColor), pos);
+			pic = new Knight(picColor);
+			board->settingBoard(pic, pos);
+			board->insertColorPieces(pic, picColor);
 
 			pos.x = j * 3 + 2;
+			pic = new Bishop(picColor);
 			board->settingBoard(new Bishop(picColor), pos);
+			board->insertColorPieces(pic, picColor);
 		}
-
+		
 		sPosition pos;
-		pos.y = i * 7, pos.x = 3;
-		board->settingBoard(new King(picColor), pos);
-		pos.x = 4;
+		pos.y = i * 7,pos.x = 4;
+		Pieces* pic = new Queen(picColor);
 		board->settingBoard(new Queen(picColor), pos);
+		board->insertColorPieces(pic, picColor);
 
 		picColor = false;
 	}
+
+	sPosition pos;
+	pos.y = 0, pos.x = 3;
+	King* Bigking = new King(true);
+	board->settingBoard(Bigking, pos);
+	board->insertColorPieces(Bigking, true);
+
+	pos.y = 7;
+	King* smallKing = new King(false);
+	board->settingBoard(smallKing, pos);
+	board->insertColorPieces(smallKing, false);
 
 	//board->printBoard(); 
 
 
 	picColor = true;
-	char  giboData[10]="\0";
-	char  gibopre[10];
+	char  giboData[20]="\0";
+	char  gibopre[20];
+	Pieces* giboPic;
 	strcpy_s(gibopre, giboData);
 	//프로모션 테스트용 코드
 
@@ -119,11 +140,13 @@ int main()
 		{
 			board->insertLastgiboData(gibopre);
 
-			printf("기보 입력해주세요 지금은 ");
+			printf("기보 입력해주세요 \n기마 이동거리Y X  현재 위치 Y X \n\n\n지금은 ");
 			if (picColor)
 				printf("대문자의 차례입니다.\n");
 			else
 				printf("소문자의 차례입니다.\n");
+
+			giboData[0] = '\0';
 
 			scanf_s("%[^\n]", giboData, 10);
 
@@ -133,24 +156,28 @@ int main()
 			strcpy_s(gibopre, giboData);
 
 			char* passing = nullptr;
-			char* token[4];
+			char* token[5];
 			token[0] = strtok_s(giboData, " ", &passing);
 			token[1] = strtok_s(NULL, " ", &passing);
 			token[2] = strtok_s(NULL, " ", &passing);
+			token[3] = strtok_s(NULL, " ", &passing);
+			//token[4] = strtok_s(NULL, " ", &passing);
 
-			Pieces* pic = board->searchPieces(*token[0], picColor);
+			int currentPosition = atoi(token[3]);
 
-			int CHyx = atoi(token[1]);
-			int Reyx = atoi(token[2]);
+			pos.y = (currentPosition / 10) - 1;
+			pos.x = (currentPosition % 10) - 1;
 
-			pos.y = (CHyx / 10) - 1;
-			pos.x = (CHyx % 10) - 1;
-
-			rePos.y = (Reyx / 10) - 1;
-			rePos.x = (Reyx % 10) - 1;
-		} while (false == board->piecesMove(pos, rePos));
+			giboPic = board->searchPieces(*token[0], picColor,pos);
 
 
+			rePos.y = atoi(token[1]);
+			rePos.x = atoi(token[2]);
+		} while (false == board->piecesMove(giboPic, rePos));
+
+
+
+		printf("%s\n",picColor==true? smallKing->amIDanger()==true?"대문자가공격하고있습니다!!폐하":"적군을 공격하라!!!!" : Bigking->amIDanger() == true ? "소문자가공격하고있습니다!!폐하" : "적군을 공격하라!!!!");
 		
 		board->printBoard();
 		//어떤 말을 움직일지 기보 작성

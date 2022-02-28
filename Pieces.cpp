@@ -32,3 +32,7 @@ bool Pieces::isMoving(sPosition postion)
 
 	return false;
 }
+void Pieces::settingPosition(sPosition pos)
+{
+	_curPosition = pos;
+}

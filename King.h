@@ -18,9 +18,8 @@ private:
 
 
 public:
-	bool isMoving(sPosition postion);
 
-
+	bool amIDanger();
 
 };
 

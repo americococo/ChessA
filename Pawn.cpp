@@ -39,7 +39,6 @@ void Pawn::setup()
 			(*itr).y = (*itr).y * -1;
 		}
 	}
-
 	_piescesCode = 'P';
 	return;
 }
@@ -82,32 +81,14 @@ void Pawn::moveAction()
 {
 
 	if (_oneMove == false)
+	{
+		printf("훗 최초의 이동이라구\n");
 		relative_move.erase(relative_move.begin());
 
+	}
 	_oneMove = true;
-	//2칸이동
-	printf("훗 최초의 이동이라구\n");
 
 	print();
 
 	return;
 }
-bool Pawn::isMoving(sPosition postion)
-{
-
-	std::vector<sPosition>::iterator itr = relative_move.begin();
-
-	for (; itr != relative_move.end(); itr++)
-	{
-		if (true == isEqualPosition((*itr), postion))
-		{
-			moveAction();
-			return true;
-		}
-	}
-
-
-
-	return false;
-}
-

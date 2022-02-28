@@ -8,3 +8,10 @@ bool isEqualPosition(sPosition asd, sPosition qwe)
 
 	return true;
 }
+sPosition addPosition(sPosition asd, sPosition qwe)
+{
+	sPosition asdzxc;
+	asdzxc.y= asd.y + qwe.y;
+	asdzxc.x = asd.x + qwe.y;
+	return asdzxc;
+}

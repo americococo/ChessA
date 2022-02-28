@@ -5,3 +5,4 @@ struct sPosition
 	int y;
 };
 bool isEqualPosition(sPosition asd, sPosition qwe);
+sPosition addPosition(sPosition asd, sPosition qwe);

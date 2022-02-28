@@ -8,5 +8,9 @@ public:
 
 	void  setup();
 
+
+private:
+	bool _oneMove;
+	void moveAction();
 };
 
