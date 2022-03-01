@@ -1,4 +1,5 @@
 #include "King.h"
+#include "Board.h"
 
 void King::setup()
 {
@@ -62,12 +63,27 @@ void King::moveAction()
 
 bool King::amIDanger()
 {
-	//적군 진로 확인
-	//적군 데이터 관리
-	//적군 데이터 통해서 적군 다음턴 경로 검사
-	//경로내에 왕이 존재할경우 true 반환
-	//없으면 false 반환
+	auto enmyData = Board::GetInstance()->GetEnemyData(!_color);
 
+
+
+	for (int i = 0; i < enmyData.size(); i++)
+	{
+		int count = enmyData[i]->getRelativeMove().size();
+		auto positionV = enmyData[i]->getRelativeMove();
+		Pieces* enmP = enmyData[i];
+		sPosition sePos;
+		for (int j = 0; j < count; i++)
+		{
+			sePos = positionV[j];
+			if (isEqualPosition(addPosition(sePos, enmP->getPos()), _curPosition))
+			{
+				printf("나 공격당한다.....(체크)\n");
+				return true;
+			}
+		}
+
+	}
 
 
 	return true;

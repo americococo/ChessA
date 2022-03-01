@@ -19,6 +19,8 @@ protected:
 
 public:
 	bool getColor() { return _color; }
+	std::vector<sPosition> getRelativeMove();
+
 
 public:
 	virtual void setup() {}
@@ -49,4 +51,8 @@ public:
 
 public:
 	virtual void moveAction() {}
+
+
+
+
 };

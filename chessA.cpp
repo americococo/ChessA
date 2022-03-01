@@ -53,7 +53,7 @@ int main()
 	//}
 
 
-	Board* board = new Board();
+	//Board* board = new Board();
 
 	bool picColor = true;
 	for (int j = 0; j < ENEYCREATE; j++)
@@ -63,8 +63,8 @@ int main()
 			sPosition pos;
 			pos.y = 1 + (j * 5), pos.x = i;
 			Pieces * pic = new Pawn(picColor);
-			board->settingBoard(pic, pos);
-			board->insertColorPieces(pic, picColor);
+			Board::GetInstance()->settingBoard(pic, pos);
+			Board::GetInstance()->insertColorPieces(pic, picColor);
 		}
 		picColor = false;
 	}
@@ -80,25 +80,25 @@ int main()
 			pos.y = (i * 7), pos.x = j * 7;
 			Pieces* pic = new Rook(picColor);
 
-			board->settingBoard(pic, pos);
-			board->insertColorPieces(pic, picColor);
+			Board::GetInstance()->settingBoard(pic, pos);
+			Board::GetInstance()->insertColorPieces(pic, picColor);
 
 			pos.x = j * 5 + 1;
 			pic = new Knight(picColor);
-			board->settingBoard(pic, pos);
-			board->insertColorPieces(pic, picColor);
+			Board::GetInstance()->settingBoard(pic, pos);
+			Board::GetInstance()->insertColorPieces(pic, picColor);
 
 			pos.x = j * 3 + 2;
 			pic = new Bishop(picColor);
-			board->settingBoard(new Bishop(picColor), pos);
-			board->insertColorPieces(pic, picColor);
+			Board::GetInstance()->settingBoard(pic, pos);
+			Board::GetInstance()->insertColorPieces(pic, picColor);
 		}
 		
 		sPosition pos;
 		pos.y = i * 7,pos.x = 4;
 		Pieces* pic = new Queen(picColor);
-		board->settingBoard(new Queen(picColor), pos);
-		board->insertColorPieces(pic, picColor);
+		Board::GetInstance()->settingBoard(pic, pos);
+		Board::GetInstance()->insertColorPieces(pic, picColor);
 
 		picColor = false;
 	}
@@ -106,13 +106,15 @@ int main()
 	sPosition pos;
 	pos.y = 0, pos.x = 3;
 	King* Bigking = new King(true);
-	board->settingBoard(Bigking, pos);
-	board->insertColorPieces(Bigking, true);
+	Board::GetInstance()->settingBoard(Bigking, pos);
+	Board::GetInstance()->insertColorPieces(Bigking, true);
+	Board::GetInstance()->InsertBigKing(Bigking);
 
 	pos.y = 7;
 	King* smallKing = new King(false);
-	board->settingBoard(smallKing, pos);
-	board->insertColorPieces(smallKing, false);
+	Board::GetInstance()->settingBoard(smallKing, pos);
+	Board::GetInstance()->insertColorPieces(smallKing, false);
+	Board::GetInstance()->InsertBigKing(smallKing);
 
 	//board->printBoard(); 
 
@@ -122,15 +124,9 @@ int main()
 	char  gibopre[20];
 	Pieces* giboPic;
 	strcpy_s(gibopre, giboData);
-	//프로모션 테스트용 코드
 
-	//{
-	//	sPosition pos;
-	//	pos.y = 5, pos.x = 1;
-	//	board->settingBoard(new Pawn(picColor), pos);
-	//}
 
-	board->printBoard();
+	Board::GetInstance()->printBoard();
 
 	while (true)
 	{
@@ -138,7 +134,7 @@ int main()
 		sPosition rePos;
 		do
 		{
-			board->insertLastgiboData(gibopre);
+			Board::GetInstance()->insertLastgiboData(gibopre);
 
 			printf("기보 입력해주세요 \n기마 이동거리Y X  현재 위치 Y X \n\n\n지금은 ");
 			if (picColor)
@@ -168,18 +164,18 @@ int main()
 			pos.y = (currentPosition / 10) - 1;
 			pos.x = (currentPosition % 10) - 1;
 
-			giboPic = board->searchPieces(*token[0], picColor,pos);
+			giboPic = Board::GetInstance()->searchPieces(*token[0], picColor, pos);
 
 
 			rePos.y = atoi(token[1]);
 			rePos.x = atoi(token[2]);
-		} while (false == board->piecesMove(giboPic, rePos));
+		} while (false == Board::GetInstance()->piecesMove(giboPic, rePos));
 
 
 
 		printf("%s\n",picColor==true? smallKing->amIDanger()==true?"대문자가공격하고있습니다!!폐하":"적군을 공격하라!!!!" : Bigking->amIDanger() == true ? "소문자가공격하고있습니다!!폐하" : "적군을 공격하라!!!!");
 		
-		board->printBoard();
+		Board::GetInstance()->printBoard();
 		//어떤 말을 움직일지 기보 작성
 		//기보데이터 파싱하여 데이터 취득
 		//취득 데이터통해서 board에게 기능수행

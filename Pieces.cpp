@@ -20,6 +20,10 @@ void Pieces::print()
 
 	return;
 }
+std::vector<sPosition> Pieces::getRelativeMove()
+{
+	return relative_move;
+}
 bool Pieces::isMoving(sPosition postion)
 {
 	std::vector<sPosition>::iterator itr = relative_move.begin();

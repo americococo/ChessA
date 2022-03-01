@@ -5,8 +5,11 @@
 #include <string.h>
 #include <Windows.h>
 
+Board * Board::_instance = nullptr;
 Board::Board()
 {
+	_mapData[0][0] = '\0';
+	getLastgiboData[0][0] = '0';
 	_bigColorPieces.clear();
 	_smallColorPieces.clear();
 
@@ -37,17 +40,20 @@ bool Board::piecesMove(Pieces * pic, sPosition relMove)
 		|| pic->getPos().x + relMove.x < -1 || pic->getPos().y + relMove.y < -1)
 		return false;
 
+
+
 	//캐슬링
-	
+
+
 	if (pic->getPiecesCode() == 'K' && relMove.y == 0 && (relMove.x == 2 || relMove.x == -2 ))
 	{
 		if (false == ((King*)pic)->amIDanger())
 		{
-			move(pic, addPosition(pic->getPos(), relMove);
+			move(pic, addPosition(pic->getPos(), relMove));
 			pic->moveAction();
 			pic->settingPosition(addPosition(pic->getPos(), relMove));
 
-			Pieces * rook;
+			Pieces * rook =nullptr;
 			if (pic->getColor())
 				for (auto itr = _bigColorPieces.begin(); itr != _bigColorPieces.end(); itr++)
 				{
@@ -55,7 +61,7 @@ bool Board::piecesMove(Pieces * pic, sPosition relMove)
 					{
 						if (relMove.x > 0 && (7 == (*itr)->getPos().x))
 						{
-							rook = (*itr)
+							rook = (*itr);
 						}
 						else if (relMove.x < 0 && (0 == (*itr)->getPos().x))
 						{
@@ -126,6 +132,58 @@ bool Board::piecesMove(Pieces * pic, sPosition relMove)
 			
 		}
 
+		//폰 예외처리
+		{
+			if (pic->getPiecesCode() == 'P'
+				&& (abs(relMove.y) == abs(relMove.x)))
+			{
+				sPosition sePos;
+				sePos = addPosition(pic->getPos(), relMove);
+
+				std::vector<Pieces*>::iterator itr;
+
+				if (pic->getColor())
+					itr = _smallColorPieces.begin();
+				else
+					itr = _bigColorPieces.begin();
+
+				Pieces* eatPieces;
+
+				for (; itr != (pic->getColor() ? _smallColorPieces.end(): _bigColorPieces.end()); itr++)
+				{
+					if (isEqualPosition((*itr)->getPos(), sePos))
+					{
+						move(pic, sePos);
+						pic->moveAction();
+						pic->settingPosition(sePos);
+
+						if (getKingInfo(pic->getColor())->amIDanger())
+						{
+							sPosition reverse;
+							reverse.y = relMove.y * -1;
+							reverse.x = relMove.x * -1;
+							sePos = addPosition(sePos, reverse);
+							move(pic, sePos);
+							pic->moveAction();
+							pic->settingPosition(sePos);
+							return false;
+						}
+
+						if (pic->getPiecesCode() == 'P' && canPromotion(pic))
+						{
+							Pieces* chosP;
+							chosP = ((Pawn*)pic)->Promotion();
+							chosP->settingPosition(pic->getPos());
+							delete pic;
+							return true;
+						}
+
+						return true;
+					}
+				}
+			}
+		}
+
 		//일반 이동
 		{
 			sPosition sePos;
@@ -140,8 +198,6 @@ bool Board::piecesMove(Pieces * pic, sPosition relMove)
 				itr = _smallColorPieces.begin();
 
 
-			
-
 			for (;  itr!= (pic->getColor()?_bigColorPieces.end():_smallColorPieces.end()); itr++)
 			{
 				if (isEqualPosition((*itr)->getPos(), sePos))
@@ -151,6 +207,18 @@ bool Board::piecesMove(Pieces * pic, sPosition relMove)
 				move(pic, sePos);
 				pic->moveAction();
 				pic->settingPosition(sePos);
+
+				if (getKingInfo(pic->getColor())->amIDanger())
+				{
+					sPosition reverse;
+					reverse.y = relMove.y * -1;
+					reverse.x = relMove.x * -1;
+					sePos = addPosition(sePos, reverse);
+					move(pic, sePos);
+					pic->moveAction();
+					pic->settingPosition(sePos);
+					return false;
+				}
 
 
 				if (pic->getPiecesCode() == 'P' && canPromotion(pic))
